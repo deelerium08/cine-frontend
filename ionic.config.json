@@ -1,0 +1,7 @@
+{
+  "name": "cine-frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
