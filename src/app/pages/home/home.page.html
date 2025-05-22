@@ -5,22 +5,22 @@
         <ion-icon slot="icon-only" ios="power-sharp" md="power-sharp"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>The Movie Database | HOME</ion-title>
+    <ion-title mode="ios">The Movie Database | HOME</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-segment>
+  <ion-segment value="nowPlaying">
     <ion-segment-button value="nowPlaying" content-id="nowPlaying">
       <ion-label>🎬 Now Playing</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="second" content-id="popular">
+    <ion-segment-button value="popular" content-id="popular">
       <ion-label>⭐ Popular</ion-label>
     </ion-segment-button>
   </ion-segment>
   <ion-segment-view>
     <ion-segment-content id="nowPlaying">
-      <!-- 🎬 Now Playing -->
+      <!-- Now Playing -->
       <ion-card>
         <ion-card-header>
           <ion-card-title>Now Playing</ion-card-title>
@@ -30,28 +30,36 @@
           <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" />
           <ion-card-content>
             <h2>{{ movie.title }}</h2>
-
             <ion-button (click)="showCredits(movie.id)">Credits</ion-button>
             <ion-modal [isOpen]="isModalOpen">
               <ng-template>
                 <ion-header>
                   <ion-toolbar>
-                    <ion-title>Credits</ion-title>
-                    <ion-buttons slot="end">
-                      <ion-button (click)="closeModal(false)">Close</ion-button>
+                    <ion-title mode="ios">Credits</ion-title>
+                    <ion-buttons slot="start">
+                      <ion-button color="danger" (click)="closeModal(false)">Close</ion-button>
                     </ion-buttons>
                   </ion-toolbar>
                 </ion-header>
-
                 <ion-content *ngIf="credits">
-                  <ion-list>
-                    <ion-item *ngFor="let person of credits.cast">
-                      <ion-label>
-                        <h2>{{ person.name }}</h2>
-                        <p>{{ person.character }}</p>
-                      </ion-label>
-                    </ion-item>
-                  </ion-list>
+                  <ion-card *ngFor="let person of credits.cast">
+                    <ion-card-header>
+                      <ion-card-title>Actor Name: {{ person.name }}</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <ion-list>
+                        <ion-item>
+                          <ion-thumbnail slot="start">
+                            <img alt="Silhouette of mountains"
+                              [src]="'https://image.tmdb.org/t/p/w500' + person.profile_path" />
+                          </ion-thumbnail>
+                          <ion-label>
+                            <p>Character: {{ person.character }}</p>
+                          </ion-label>
+                        </ion-item>
+                      </ion-list>
+                    </ion-card-content>
+                  </ion-card>
                 </ion-content>
               </ng-template>
             </ion-modal>
@@ -60,7 +68,7 @@
       </ion-card>
     </ion-segment-content>
     <ion-segment-content id="popular">
-      <!-- ⭐ Popular -->
+      <!--  Popular -->
       <ion-card>
         <ion-card-header>
           <ion-card-title>Popular Movies</ion-card-title>
@@ -69,7 +77,40 @@
           <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" />
           <ion-card-content>
             <h2>{{ movie.title }}</h2>
-            <!-- <ion-button size="small" expand="block" (click)="viewCredits(movie.id)">Credits</ion-button> -->
+            <ion-button (click)="showCredits(movie.id)">Credits</ion-button>
+            <ion-modal [isOpen]="isModalOpen">
+              <ng-template>
+                <ion-header>
+                  <ion-toolbar>
+                    <ion-title mode="ios">Credits</ion-title>
+                    <ion-buttons slot="start">
+                      <ion-button color="danger" (click)="closeModal(false)">Close</ion-button>
+                    </ion-buttons>
+                  </ion-toolbar>
+                </ion-header>
+
+                <ion-content *ngIf="credits">
+                  <ion-card *ngFor="let person of credits.cast">
+                    <ion-card-header>
+                      <ion-card-title>Actor Name: {{ person.name }}</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <ion-list>
+                        <ion-item>
+                          <ion-thumbnail slot="start">
+                            <img alt="Silhouette of mountains"
+                              [src]="'https://image.tmdb.org/t/p/w500' + person.profile_path" />
+                          </ion-thumbnail>
+                          <ion-label>
+                            <p>Character: {{ person.character }}</p>
+                          </ion-label>
+                        </ion-item>
+                      </ion-list>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-content>
+              </ng-template>
+            </ion-modal>
 
           </ion-card-content>
         </ion-card>

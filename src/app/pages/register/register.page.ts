@@ -40,7 +40,6 @@ export class RegisterPage {
   }
   async onSubmit() {
     if (this.formRegister.invalid) return;
-
     this.authService.register(this.formRegister.value).subscribe({
       next: () => {
         alert('User registered successfully!');

@@ -24,11 +24,21 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.moviesService.getNowPlaying().subscribe(response => {
-      this.nowPlaying = response.results;
+    this.moviesService.getNowPlaying().subscribe({
+      next: (response) => {
+        this.nowPlaying = response.results;
+      },
+      error: (err) => {
+        console.error('Error fetching now playing movies:', err);
+      }
     });
-    this.moviesService.getPopular().subscribe(response => {
-      this.popular = response.results;
+    this.moviesService.getPopular().subscribe({
+      next: (response) => {
+        this.popular = response.results;
+      },
+      error: (err) => {
+        console.error('Error fetching popular movies:', err);
+      }
     });
   }
 
@@ -36,20 +46,17 @@ export class HomePage implements OnInit {
     this.isModalOpen = isOpen;
     this.credits = null;
   }
-  viewCredits(movieId: number) {
-    console.log(movieId);
-  }
+
 
   async showCredits(movieId: number) {
     this.moviesService.getCredits(movieId).subscribe((data) => {
       this.credits = data;
       this.isModalOpen = true;
+
     });
   }
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
-
-
 }
